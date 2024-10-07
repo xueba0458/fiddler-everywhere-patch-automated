@@ -294,26 +294,6 @@ jobs:
           }
         shell: pwsh
 
-      - name: Patch main.js to main.original.js
-        run: |
-          $source_main = "FE/resources/app/out/main.js"
-          $main_content = Get-Content -Path $source_main -Raw
-
-          $new_main = "FE/resources/app/out/main.original.js"
-
-          $source_index = "msojocs-patch/server/index.js"
-          $index_content = Get-Content -Path $source_index -Raw
-          
-          if ((Test-Path $source_main) -and (Test-Path $source_index)) {
-            Copy-Item -Path $source_main -Destination $new_main
-
-            $appended_content = $index_content + $main_content
-
-            Set-Content -Path $source_main -Value $appended_content
-          } else {
-            Write-Host "Source main.js or index.js (from server) not found"
-          }
-
       - name: Patch main.XXX.js to main.XXX.original.js
         run: |
           $directory = 'FE/resources/app/out/WebServer/ClientApp/dist'
@@ -337,11 +317,11 @@ jobs:
               $source_content = Get-Content -Path $originalFullPath -Raw
 
               $searchText1 = "https://api.getfiddler.com"
-              $replaceText1 = "http://127.0.0.1:5678/api.getfiddler.com"
+              $replaceText1 = "https://fd.xueba666.top/api.getfiddler.com"
               $updatedText1 = $source_content -replace [regex]::Escape($searchText1), $replaceText1
 
               $searchText2 = "https://identity.getfiddler.com"
-              $replaceText2 = "http://127.0.0.1:5678/identity.getfiddler.com"
+              $replaceText2 = "https://fd.xueba666.top/identity.getfiddler.com"
               $finalUpdatedText = $updatedText1 -replace [regex]::Escape($searchText2), $replaceText2
 
               # Overwrite the file with the new content
@@ -367,13 +347,6 @@ jobs:
           $jsonContent = @{
             "ClientApp\\dist\\$env:MAIN_XXX_NAME.js" = @{
               "target" = "ClientApp\\dist\\$env:MAIN_XXX_NAME.original.js"
-              "content" = ""
-              "cur" = 0
-              "start" = 0
-              "end" = 1
-            }
-            "..\\main.js" = @{
-              "target" = "..\\main.original.js"
               "content" = ""
               "cur" = 0
               "start" = 0

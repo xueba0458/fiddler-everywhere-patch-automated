@@ -332,25 +332,25 @@ jobs:
           }
         shell: pwsh
 
-      # - name: Patch main.js to main.original.js
-      #   run: |
-      #     $source_main = "FE/resources/app/out/main.js"
-      #     $main_content = Get-Content -Path $source_main -Raw
+      - name: Patch main.js to main.original.js
+        run: |
+          $source_main = "FE/resources/app/out/main.js"
+          $main_content = Get-Content -Path $source_main -Raw
 
-      #     $new_main = "FE/resources/app/out/main.original.js"
+          $new_main = "FE/resources/app/out/main.original.js"
 
-      #     $source_index = "msojocs-patch/server/index.js"
-      #     $index_content = Get-Content -Path $source_index -Raw
+          $source_index = "msojocs-patch/server/index.js"
+          $index_content = Get-Content -Path $source_index -Raw
           
-      #     if ((Test-Path $source_main) -and (Test-Path $source_index)) {
-      #       Copy-Item -Path $source_main -Destination $new_main
+          if ((Test-Path $source_main) -and (Test-Path $source_index)) {
+            Copy-Item -Path $source_main -Destination $new_main
 
-      #       $appended_content = $index_content + $main_content
+            $appended_content = $index_content + $main_content
 
-      #       Set-Content -Path $source_main -Value $appended_content
-      #     } else {
-      #       Write-Host "Source main.js or index.js (from server) not found"
-      #     }
+            Set-Content -Path $source_main -Value $appended_content
+          } else {
+            Write-Host "Source main.js or index.js (from server) not found"
+          }
 
       - name: Patch main.XXX.js to main.XXX.original.js
         run: |
